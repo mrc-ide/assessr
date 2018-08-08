@@ -1,20 +1,12 @@
 # assessR
 
-The goal of assessR is to ...
+The goal of assessR is to implement metrics to evaluate probabilistic 
+forecasts. The following 4 metrics will be implemented:
+1. Relative mean squared error
+2. Mean residual
+3. Sharpness
+4. Bias
 
 ## Installation
 
-You can install the released version of assessR from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("assessR")
-```
-
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-## basic example code
-```
-
+For now, only from github.
