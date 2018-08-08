@@ -32,6 +32,13 @@ avg_residual <- function(obs, pred) {
     avg_res
 }
 
+heaviside <- function(x) {
+    if (is.na(x)) NA
+    else if (x > 0) 1
+    else if (x < 0) 0
+    else 0.5
+}
+
 ##' Median absolute deviation about the median
 ##' @details
 sharpness <- function(pred) {
@@ -40,5 +47,21 @@ sharpness <- function(pred) {
     dvtn_median <- apply(dvtn, 1, median)
     dvtn_median
 }
-
-## Bias :
+##' Bias in probabilistic forecasts
+##'
+##' @details Bias is measured as
+##' \deqn{2 * mean((heaviside(obs - pred)) - 0.5)}
+##' where heaviside returns 1 if the arg is positive, 0 if this negative
+##' and 0.5 if it is 0. The average is taken over all simulations.
+##' @title
+##' @param obs
+##' @param pred
+##' @return
+##' @author Sangeeta Bhatia
+bias <- function(obs, pred) {
+    res <- pred - obs
+    hvals <- apply(res, c(1, 2), heaviside)
+    hvals <- apply(hvals, 1, mean, na.rm = TRUE)
+    out <- 2 * (hvals - 0.5)
+    out
+}
