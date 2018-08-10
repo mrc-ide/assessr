@@ -13,7 +13,7 @@
 rel_mse <- function(obs, pred) {
     nsims <- ncol(pred)
     res_sq <- rowSums((obs - pred) ^ 2)
-    avg_res_sq <- res_sq / (nsims * (obs + 1))
+    avg_res_sq <- res_sq / (nsims * ((obs + 1) ^ 2))
     avg_res_sq
 }
 ##' Resdiual averaged acorss simulations
