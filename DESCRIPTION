@@ -1,7 +1,7 @@
 Package: assessR
 Version: 0.0.0.9000
 Title: Performance metrics for probabilitic forecasts
-Description: 
+Description: This package implements 4 metrics for assessing the performance of probabilitic forecasts.
 Authors@R: person("Sangeeta", "Bhatia", , "sangeetabhatia03@gmail.com", c("aut", "cre"))
 License: What license it uses
 Encoding: UTF-8
