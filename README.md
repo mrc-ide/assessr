@@ -15,3 +15,5 @@ For now, only from github.
 ```{r}
 devtools::install_github("sangeetabhatia03/assessR")
 ```
+
+[![Coverage status](https://codecov.io/gh/sangeetabhatia03/assessR/branch/master/graph/badge.svg)](https://codecov.io/github/sangeetabhatia03/assessR?branch=master)
