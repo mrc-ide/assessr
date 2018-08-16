@@ -10,6 +10,7 @@
 ##' @return error T X 1. Each entry is the error averaged across the
 ##' simulations
 ##' @author Sangeeta Bhatia
+##' @export
 rel_mse <- function(obs, pred) {
     nsims <- ncol(pred)
     res_sq <- rowSums((obs - pred) ^ 2)
@@ -26,6 +27,7 @@ rel_mse <- function(obs, pred) {
 ##' @return error T X 1. Each entry is the error averaged across the
 ##' simulations.
 ##' @author Sangeeta Bhatia
+##' @export
 avg_residual <- function(obs, pred) {
     nsims <- ncol(pred)
     avg_res <- rowSums(obs - pred) / nsims
@@ -45,6 +47,7 @@ heaviside <- function(x) {
 ##' @param pred T X N Matrix of predictions. Each column is
 ##' a simulation.
 ##' @return vector of length T.
+##' @export
 sharpness <- function(pred) {
     pred_median <- apply(pred, 1, stats::median)
     dvtn <- abs(pred - pred_median)
@@ -62,6 +65,7 @@ sharpness <- function(pred) {
 ##' @param pred Simulated predictions T X N. Each column is a simulation.
 ##' @return
 ##' @author Sangeeta Bhatia
+##' @export
 bias <- function(obs, pred) {
     res <- pred - obs
     hvals <- apply(res, c(1, 2), heaviside)
@@ -80,6 +84,7 @@ bias <- function(obs, pred) {
 ##' @param pred T X N matrix of predictions where each column is a simulation.
 ##' @return T X 1 vector of mean absolute error normalised by the observed value.
 ##' @author Sangeeta Bhatia
+##' @export
 rel_mae <- function(obs, pred) {
     nsims <- ncol(pred)
     res_abs <- rowSums(abs(obs - pred))
