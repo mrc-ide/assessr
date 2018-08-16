@@ -3,7 +3,7 @@ Version: 0.0.0.9000
 Title: Performance metrics for probabilitic forecasts
 Description: This package implements various metrics for assessing the performance of probabilitic forecasts.
 Authors@R: person("Sangeeta", "Bhatia", , "sangeetabhatia03@gmail.com", c("aut", "cre"))
-License: What license it uses
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true

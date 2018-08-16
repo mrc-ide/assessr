@@ -19,7 +19,8 @@ rel_mse <- function(obs, pred) {
 }
 ##' Resdiual averaged acorss simulations
 ##'
-##'
+##' @details
+##' \deqn{\sum_{i = 1}^{N}{obs - pred} / N }
 ##' @title Average Residual
 ##' @param obs observed vector T X 1
 ##' @param pred matrix of predicted observations. Each column is a
@@ -42,11 +43,12 @@ heaviside <- function(x) {
 }
 
 ##' Median absolute deviation about the median
-##' @details
+##' @details \deqn{median(|pred - median(pred)|)}
 ##' @title Sharpness
 ##' @param pred T X N Matrix of predictions. Each column is
 ##' a simulation.
 ##' @return vector of length T.
+##' @references https://bit.ly/2vPO0I9
 ##' @export
 sharpness <- function(pred) {
     pred_median <- apply(pred, 1, stats::median)
@@ -60,11 +62,12 @@ sharpness <- function(pred) {
 ##' \deqn{2 * mean((heaviside(obs - pred)) - 0.5)}
 ##' where heaviside returns 1 if the arg is positive, 0 if this negative
 ##' and 0.5 if it is 0. The average is taken over all simulations.
-##' @title
+##' @title Bias
 ##' @param obs observed vector T X 1
 ##' @param pred Simulated predictions T X N. Each column is a simulation.
-##' @return
+##' @return vector of length T.
 ##' @author Sangeeta Bhatia
+##' @references https://bit.ly/2vPO0I9
 ##' @export
 bias <- function(obs, pred) {
     res <- pred - obs
