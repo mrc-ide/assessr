@@ -41,21 +41,25 @@ heaviside <- function(x) {
 
 ##' Median absolute deviation about the median
 ##' @details
+##' @title Sharpness
+##' @param pred T X N Matrix of predictions. Each column is
+##' a simulation.
+##' @return vector of length T.
 sharpness <- function(pred) {
-    pred_median <- apply(pred, 1, median)
+    pred_median <- apply(pred, 1, stats::median)
     dvtn <- abs(pred - pred_median)
-    dvtn_median <- apply(dvtn, 1, median)
+    dvtn_median <- apply(dvtn, 1, stats::median)
     dvtn_median
 }
 ##' Bias in probabilistic forecasts
-##'
+##' @title Bias
 ##' @details Bias is measured as
 ##' \deqn{2 * mean((heaviside(obs - pred)) - 0.5)}
 ##' where heaviside returns 1 if the arg is positive, 0 if this negative
 ##' and 0.5 if it is 0. The average is taken over all simulations.
 ##' @title
-##' @param obs
-##' @param pred
+##' @param obs observed vector T X 1
+##' @param pred Simulated predictions T X N. Each column is a simulation.
 ##' @return
 ##' @author Sangeeta Bhatia
 bias <- function(obs, pred) {
@@ -64,4 +68,21 @@ bias <- function(obs, pred) {
     hvals <- apply(hvals, 1, mean, na.rm = TRUE)
     out <- 2 * (hvals - 0.5)
     out
+}
+
+
+##' Relative mean absolute error
+##' @details Relative mean absolute error is defined as
+##' \deqn{\sum_{i = 1}^{N}{|obs - pred|} / N * |obs + 1|}
+##'
+##' @title Relative mean absolute error
+##' @param obs T X 1 vector of observations.
+##' @param pred T X N matrix of predictions where each column is a simulation.
+##' @return T X 1 vector of mean absolute error normalised by the observed value.
+##' @author Sangeeta Bhatia
+rel_mae <- function(obs, pred) {
+    nsims <- ncol(pred)
+    res_abs <- rowSums(abs(obs - pred))
+    avg_res_abs <- res_abs / (nsims * (abs(obs + 1)))
+    avg_res_abs
 }

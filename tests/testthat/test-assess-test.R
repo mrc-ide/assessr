@@ -3,7 +3,7 @@ context("test-assess-test.R")
 test_that("relative mean sqaure error works", {
     obs <- 1:4
     pred <- matrix(c(1, 10, 2, 4,
-                     7, 3,5, 6,
+                     7, 3, 5, 6,
                      8, 9, 1, 10),
                    nrow = 4,
                    byrow = FALSE)
@@ -52,4 +52,17 @@ test_that("bias works", {
     correct <- c(0.8, -0.2, -0.6, -0.6)
     out <- bias(obs, pred)
     expect_equal(correct, out)
+})
+
+test_that("relative mean absolute error works", {
+    obs <- 1:4
+    pred <- matrix(c(1, 10, 2, 4,
+                     7, 3, 5, 6,
+                     8, 9, 1, 10),
+                   nrow = 4,
+                   byrow = FALSE)
+    correct <- c(2.17, 1.78, 0.42, 0.53)
+    out <- round(rel_mae(obs, pred), 2)
+    expect_true(all(correct == out))
+
 })
