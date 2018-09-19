@@ -94,3 +94,31 @@ rel_mae <- function(obs, pred) {
     avg_res_abs <- res_abs / (nsims * (abs(obs + 1)))
     avg_res_abs
 }
+
+
+##' Proportion of observations in given credible interval
+##'
+##' @details Proportion of observed values that fall within a
+##' given interval
+##' @title Proportion of observations in given credible interval
+##' @param obs vector of observed values
+##' @param min vector of the lower end of the interval. Either
+##' length 1 vector or the same length as the that of obs.
+##' @param max vector of the upper end of the interval. Either length
+##' 1 or the same length as that of the obs vector.
+##' @return proportion of values in obs vector that are greater than
+##' or equal to min and less than or equal to max.
+##' @author Sangeeta Bhatia
+prop_in_ci <- function(obs, min, max) {
+    n <- length(obs)
+    len_min <- length(min)
+    len_max <- length(max)
+    if (len_min != 1 & len_min != n)
+        stop("Length of min vector should be 1 or same as obs.")
+
+    if (len_max != 1 & len_max != n)
+        stop("Length of max vector should be 1 or same as obs.")
+
+    in_ci <- sum(min <= obs & obs <= max)
+    in_ci / n
+}
