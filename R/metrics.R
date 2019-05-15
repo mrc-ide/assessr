@@ -122,3 +122,13 @@ prop_in_ci <- function(obs, min, max) {
     in_ci <- sum(min <= obs & obs <= max)
     in_ci / n
 }
+
+
+## https://tinyurl.com/y99x2jxq
+log_accuracy_ratio <- function(obs, pred) {
+    nsims <- ncol(pred)
+    avg_pred <- apply(pred, 1, mean)
+    log_accuracy <- log(avg_pred / (obs + 1))
+    log_accuracy
+
+}
