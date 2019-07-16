@@ -56,6 +56,23 @@ sharpness <- function(pred) {
     dvtn_median <- apply(dvtn, 1, stats::median)
     dvtn_median
 }
+
+##' Relative sharpness: median absolute deviation about the median
+##' @details \deqn{median(|(pred - median(pred))/pred|)}
+##' @title Relative sharpness
+##' @param pred T X N Matrix of predictions. Each column is
+##' a simulation.
+##' @return vector of length T.
+##' @references https://bit.ly/2vPO0I9
+##' @export
+rel_sharpness <- function(pred) {
+    pred_median <- apply(pred, 1, stats::median)
+    rel_dvtn <- abs(pred - pred_median) / (pred + 1)
+    rel_dvtn_median <- apply(rel_dvtn, 1, stats::median)
+    rel_dvtn_median
+}
+
+
 ##' Bias in probabilistic forecasts
 ##' @title Bias
 ##' @details Bias is measured as
