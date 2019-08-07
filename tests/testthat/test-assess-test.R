@@ -74,3 +74,12 @@ test_that("relative sharpness works", {
   out <- round(rel_sharpness(pred), 2)
   expect_true(all(correct == out))
 })
+
+
+test_that("relative sharpness2 works", {
+  pred <- c(1:9, 2, 11:16, 19, 20)
+  pred <- matrix(pred, nrow = 2, ncol = 9, byrow = TRUE)
+  correct <- c(0.33, 0.13)
+  out <- round(rel_sharpness2(pred), 2)
+  expect_true(all(correct == out))
+})
