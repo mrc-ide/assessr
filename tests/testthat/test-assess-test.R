@@ -36,7 +36,7 @@ test_that("shaprness works", {
                    ncol = 5,
                    byrow = TRUE)
     correct <- c(1, 2, 2, 1)
-    out <- sharpness(pred)
+    out <- abs_median_dvtn(pred)
     expect_equal(correct, out)
 })
 
@@ -71,15 +71,16 @@ test_that("relative sharpness works", {
   pred <- c(1:9, 2, 11:16, 19, 20)
   pred <- matrix(pred, nrow = 2, ncol = 9, byrow = TRUE)
   correct <- c(0.33, 0.15)
-  out <- round(rel_sharpness(pred), 2)
+  out <- round(rel_median_dvtn(pred), 2)
   expect_true(all(correct == out))
 })
 
 
-test_that("relative sharpness2 works", {
+test_that("relative mean deviation about median works", {
   pred <- c(1:9, 2, 11:16, 19, 20)
   pred <- matrix(pred, nrow = 2, ncol = 9, byrow = TRUE)
   correct <- c(0.33, 0.13)
-  out <- round(rel_sharpness2(pred), 2)
+  out <- round(rel_mean_dvtn(pred), 2)
   expect_true(all(correct == out))
-})
+ }
+)

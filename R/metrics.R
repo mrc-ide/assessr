@@ -42,7 +42,7 @@ heaviside <- function(x) {
     else 0.5
 }
 
-##' Median absolute deviation about the median
+##' Absolute Median absolute deviation about the median
 ##' @details \deqn{median(|pred - median(pred)|)}
 ##' @title Sharpness
 ##' @param pred T X N Matrix of predictions. Each column is
@@ -50,12 +50,13 @@ heaviside <- function(x) {
 ##' @return vector of length T.
 ##' @references https://bit.ly/2vPO0I9
 ##' @export
-sharpness <- function(pred) {
+abs_median_dvtn <- function(pred) {
     pred_median <- apply(pred, 1, stats::median)
     dvtn <- abs(pred - pred_median)
     dvtn_median <- apply(dvtn, 1, stats::median)
     dvtn_median
 }
+
 
 ##' Relative sharpness: median absolute deviation about the median
 ##' @details \deqn{median(|(pred - median(pred))/pred|)}
@@ -65,14 +66,15 @@ sharpness <- function(pred) {
 ##' @return vector of length T.
 ##' @references https://bit.ly/2vPO0I9
 ##' @export
-rel_sharpness <- function(pred) {
+rel_median_dvtn <- function(pred) {
+    pred <- pred + 1 ## in case there are 0s.
     pred_median <- apply(pred, 1, stats::median)
-    rel_dvtn <- abs(pred - pred_median) / (pred + 1)
-    rel_dvtn_median <- apply(rel_dvtn, 1, stats::median)
+    rel_dvtn <- abs(pred - pred_median)
+    rel_dvtn_median <- apply(rel_dvtn, 1, stats::median) / pred_median
     rel_dvtn_median
 }
 
-##' Relative sharpness: median absolute deviation about the median
+##' Relative mean absolute deviation about the median
 ##' @details \deqn{median(|(pred - median(pred))/pred|)}
 ##' @title Relative sharpness
 ##' @param pred T X N Matrix of predictions. Each column is
@@ -81,25 +83,11 @@ rel_sharpness <- function(pred) {
 ##' @references https://bit.ly/2vPO0I9
 ##' @export
 rel_mean_dvtn <- function(pred) {
-    pred_median <- apply(pred, 1, stats::median)
-    rel_dvtn <- abs(pred - pred_median) / (pred + 1)
-    rel_dvtn_mean <- apply(rel_dvtn, 1, mean)
-    rel_dvtn_mean
-}
-##' Relative sharpness: median absolute deviation about the median
-##' @details \deqn{median(|(pred - median(pred))/pred|)}
-##' @title Relative sharpness
-##' @param pred T X N Matrix of predictions. Each column is
-##' a simulation.
-##' @return vector of length T.
-##' @references https://bit.ly/2vPO0I9
-##' @export
-rel_sharpness2 <- function(pred) {
     pred <- pred + 1 ## in case there are 0s.
     pred_median <- apply(pred, 1, stats::median)
     rel_dvtn <- abs(pred - pred_median)
-    rel_dvtn_median <- apply(rel_dvtn, 1, stats::median) / pred_median
-    rel_dvtn_median
+    rel_dvtn_mean <- apply(rel_dvtn, 1, mean) / pred_median
+    rel_dvtn_mean
 }
 
 
