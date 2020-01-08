@@ -17,7 +17,8 @@ rel_mse <- function(obs, pred) {
     avg_res_sq <- res_sq / (nsims * ((obs + 1) ^ 2))
     avg_res_sq
 }
-##' Resdiual averaged acorss simulations
+
+##' Residual averaged acorss simulations
 ##'
 ##' @details
 ##' \deqn{\sum_{i = 1}^{N}{obs - pred} / N }
@@ -30,11 +31,21 @@ rel_mse <- function(obs, pred) {
 ##' @author Sangeeta Bhatia
 ##' @export
 avg_residual <- function(obs, pred) {
+
     nsims <- ncol(pred)
     avg_res <- rowSums(obs - pred) / nsims
     avg_res
 }
-
+##' Heaviside function
+##'
+##' @details Heaviside function H(x) is defined to be 1 if x is positive
+##' and 0 otherwise. If x is 0, the function returns 0.5.
+##'
+##' @title Heaviside function
+##' @param x number
+##' @return 1 if x is positive, 0 if it is negative and 0.5 otherwise.
+##' @author Sangeeta Bhatia
+##' @keywords internal
 heaviside <- function(x) {
     if (is.na(x)) NA
     else if (x > 0) 1
@@ -42,15 +53,20 @@ heaviside <- function(x) {
     else 0.5
 }
 
-##' Absolute Median absolute deviation about the median
+##' Median absolute deviation about the median
 ##' @details \deqn{median(|pred - median(pred)|)}
-##' @title Sharpness
+##' @title MADM
 ##' @param pred T X N Matrix of predictions. Each column is
 ##' a simulation.
 ##' @return vector of length T.
+##' @details Median absolute deviation about the median is a measure of
+##' how clustered the forecasts are. A value of 0 indicates that all
+##' the predicted values are the same, thus highly clustered. Large
+##' values indicate more diffuse predictions.
 ##' @references https://bit.ly/2vPO0I9
+##' @seealso [rel_madm()]
 ##' @export
-abs_median_dvtn <- function(pred) {
+abs_madm <- function(pred) {
     pred_median <- apply(pred, 1, stats::median)
     dvtn <- abs(pred - pred_median)
     dvtn_median <- apply(dvtn, 1, stats::median)
@@ -65,8 +81,9 @@ abs_median_dvtn <- function(pred) {
 ##' a simulation.
 ##' @return vector of length T.
 ##' @references https://bit.ly/2vPO0I9
+##' @seealso [abs_madm()]
 ##' @export
-rel_median_dvtn <- function(pred) {
+rel_madm <- function(pred) {
     pred <- pred + 1 ## in case there are 0s.
     pred_median <- apply(pred, 1, stats::median)
     rel_dvtn <- abs(pred - pred_median)

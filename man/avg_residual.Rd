@@ -17,7 +17,7 @@ error T X 1. Each entry is the error averaged across the
 simulations.
 }
 \description{
-Resdiual averaged acorss simulations
+Residual averaged acorss simulations
 }
 \details{
 \deqn{\sum_{i = 1}^{N}{obs - pred} / N }
