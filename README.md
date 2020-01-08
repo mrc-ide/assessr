@@ -1,6 +1,6 @@
-# assessR
+# assessr
 
-The goal of assessR is to implement metrics to evaluate probabilistic 
+The goal of assessr is to implement metrics to evaluate probabilistic 
 forecasts. The following 4 metrics will be implemented:
 1. Relative mean squared error
 2. Relative mean absolute error
@@ -13,7 +13,8 @@ forecasts. The following 4 metrics will be implemented:
 For now, only from github.
 
 ```{r}
-devtools::install_github("sangeetabhatia03/assessR")
+devtools::install_github("sangeetabhatia03/assessr")
 ```
 
-[![Coverage status](https://codecov.io/gh/sangeetabhatia03/assessR/branch/master/graph/badge.svg)](https://codecov.io/github/sangeetabhatia03/assessR?branch=master)
+[![Coverage status](https://codecov.io/gh/sangeetabhatia03/assessR/branch/master/graph/badge.svg)](https://codecov.io/github/sangeetabhatia03/assessr?branch=master)
+[![Build status](https://travis-ci.org/sangeetabhatia03/assessr.svg?branch=master)](https://travis-ci.org/sangeetabhatia03/assessr.svg?branch=master)
