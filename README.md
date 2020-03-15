@@ -13,7 +13,7 @@ forecasts. The following 4 metrics will be implemented:
 For now, only from github.
 
 ```{r}
-devtools::install_github("sangeetabhatia03/assessr")
+remotes::install_github("sangeetabhatia03/assessr")
 ```
 
 [![Coverage status](https://codecov.io/gh/sangeetabhatia03/assessR/branch/master/graph/badge.svg)](https://codecov.io/github/sangeetabhatia03/assessr?branch=master)

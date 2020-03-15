@@ -14,7 +14,7 @@
 rel_mse <- function(obs, pred) {
     nsims <- ncol(pred)
     res_sq <- rowSums((obs - pred) ^ 2)
-    avg_res_sq <- res_sq / (nsims * ((obs + 1) ^ 2))
+    avg_res_sq <- res_sq / (nsims * (obs^2 + 1))
     avg_res_sq
 }
 
@@ -119,7 +119,7 @@ rel_mean_dvtn <- function(pred) {
 ##' @param pred Simulated predictions T X N. Each column is a simulation.
 ##' @return vector of length T.
 ##' @author Sangeeta Bhatia
-##' @references https://bit.ly/2vPO0I9
+##' @references https://doi.org/10.1371/journal.pcbi.1006785
 ##' @export
 bias <- function(obs, pred) {
     res <- pred - obs
