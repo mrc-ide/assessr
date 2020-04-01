@@ -24,7 +24,7 @@ where heaviside returns 1 if the arg is positive, 0 if this negative
 and 0.5 if it is 0. The average is taken over all simulations.
 }
 \references{
-https://bit.ly/2vPO0I9
+https://doi.org/10.1371/journal.pcbi.1006785
 }
 \author{
 Sangeeta Bhatia

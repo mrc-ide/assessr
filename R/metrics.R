@@ -161,7 +161,9 @@ rel_mae <- function(obs, pred) {
 ##' @return proportion of values in obs vector that are greater than
 ##' or equal to min and less than or equal to max.
 ##' @author Sangeeta Bhatia
+##' @export
 prop_in_ci <- function(obs, min, max) {
+
     n <- length(obs)
     len_min <- length(min)
     len_max <- length(max)
