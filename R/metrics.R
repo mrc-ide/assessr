@@ -12,10 +12,10 @@
 ##' @author Sangeeta Bhatia
 ##' @export
 rel_mse <- function(obs, pred) {
-    nsims <- ncol(pred)
-    res_sq <- rowSums((obs - pred) ^ 2)
-    avg_res_sq <- res_sq / (nsims * (obs^2 + 1))
-    avg_res_sq
+  nsims <- ncol(pred)
+  res_sq <- rowSums((obs - pred)^2)
+  avg_res_sq <- res_sq / (nsims * (obs^2 + 1))
+  avg_res_sq
 }
 
 ##' Residual averaged acorss simulations
@@ -31,10 +31,9 @@ rel_mse <- function(obs, pred) {
 ##' @author Sangeeta Bhatia
 ##' @export
 avg_residual <- function(obs, pred) {
-
-    nsims <- ncol(pred)
-    avg_res <- rowSums(obs - pred) / nsims
-    avg_res
+  nsims <- ncol(pred)
+  avg_res <- rowSums(obs - pred) / nsims
+  avg_res
 }
 ##' Heaviside function
 ##'
@@ -47,10 +46,15 @@ avg_residual <- function(obs, pred) {
 ##' @author Sangeeta Bhatia
 ##' @keywords internal
 heaviside <- function(x) {
-    if (is.na(x)) NA
-    else if (x > 0) 1
-    else if (x < 0) 0
-    else 0.5
+  if (is.na(x)) {
+    NA
+  } else if (x > 0) {
+    1
+  } else if (x < 0) {
+    0
+  } else {
+    0.5
+  }
 }
 
 ##' Median absolute deviation about the median
@@ -67,10 +71,10 @@ heaviside <- function(x) {
 ##' @seealso [rel_madm()]
 ##' @export
 abs_madm <- function(pred) {
-    pred_median <- apply(pred, 1, stats::median)
-    dvtn <- abs(pred - pred_median)
-    dvtn_median <- apply(dvtn, 1, stats::median)
-    dvtn_median
+  pred_median <- apply(pred, 1, stats::median)
+  dvtn <- abs(pred - pred_median)
+  dvtn_median <- apply(dvtn, 1, stats::median)
+  dvtn_median
 }
 
 
@@ -84,11 +88,11 @@ abs_madm <- function(pred) {
 ##' @seealso [abs_madm()]
 ##' @export
 rel_madm <- function(pred) {
-    pred <- pred + 1 ## in case there are 0s.
-    pred_median <- apply(pred, 1, stats::median)
-    rel_dvtn <- abs(pred - pred_median)
-    rel_dvtn_median <- apply(rel_dvtn, 1, stats::median) / pred_median
-    rel_dvtn_median
+  pred <- pred + 1 ## in case there are 0s.
+  pred_median <- apply(pred, 1, stats::median)
+  rel_dvtn <- abs(pred - pred_median)
+  rel_dvtn_median <- apply(rel_dvtn, 1, stats::median) / pred_median
+  rel_dvtn_median
 }
 
 ##' Relative mean absolute deviation about the median
@@ -100,11 +104,11 @@ rel_madm <- function(pred) {
 ##' @references https://bit.ly/2vPO0I9
 ##' @export
 rel_mean_dvtn <- function(pred) {
-    pred <- pred + 1 ## in case there are 0s.
-    pred_median <- apply(pred, 1, stats::median)
-    rel_dvtn <- abs(pred - pred_median)
-    rel_dvtn_mean <- apply(rel_dvtn, 1, mean) / pred_median
-    rel_dvtn_mean
+  pred <- pred + 1 ## in case there are 0s.
+  pred_median <- apply(pred, 1, stats::median)
+  rel_dvtn <- abs(pred - pred_median)
+  rel_dvtn_mean <- apply(rel_dvtn, 1, mean) / pred_median
+  rel_dvtn_mean
 }
 
 
@@ -122,11 +126,11 @@ rel_mean_dvtn <- function(pred) {
 ##' @references https://doi.org/10.1371/journal.pcbi.1006785
 ##' @export
 bias <- function(obs, pred) {
-    res <- pred - obs
-    hvals <- apply(res, c(1, 2), heaviside)
-    hvals <- apply(hvals, 1, mean, na.rm = TRUE)
-    out <- 2 * (hvals - 0.5)
-    out
+  res <- pred - obs
+  hvals <- apply(res, c(1, 2), heaviside)
+  hvals <- apply(hvals, 1, mean, na.rm = TRUE)
+  out <- 2 * (hvals - 0.5)
+  out
 }
 
 
@@ -141,10 +145,24 @@ bias <- function(obs, pred) {
 ##' @author Sangeeta Bhatia
 ##' @export
 rel_mae <- function(obs, pred) {
-    nsims <- ncol(pred)
-    res_abs <- rowSums(abs(obs - pred))
-    avg_res_abs <- res_abs / (nsims * (abs(obs + 1)))
-    avg_res_abs
+  nsims <- ncol(pred)
+  res_abs <- rowSums(abs(obs - pred))
+  avg_res_abs <- res_abs / (nsims * (abs(obs + 1)))
+  avg_res_abs
+}
+##' Mean absolute error
+##'
+##'
+##'
+##'
+##' @inheritParams rel_mae
+##' @return T X 1 vector of mean absolute error
+##' @author Sangeeta Bhatia
+##' @export
+mae <- function(obs, pred) {
+  nsims <- ncol(pred)
+  res_abs <- rowSums(abs(obs - pred))
+  res_abs / nsims
 }
 
 
@@ -163,26 +181,26 @@ rel_mae <- function(obs, pred) {
 ##' @author Sangeeta Bhatia
 ##' @export
 prop_in_ci <- function(obs, min, max) {
+  n <- length(obs)
+  len_min <- length(min)
+  len_max <- length(max)
+  if (len_min != 1 & len_min != n) {
+    stop("Length of min vector should be 1 or same as obs.")
+  }
 
-    n <- length(obs)
-    len_min <- length(min)
-    len_max <- length(max)
-    if (len_min != 1 & len_min != n)
-        stop("Length of min vector should be 1 or same as obs.")
+  if (len_max != 1 & len_max != n) {
+    stop("Length of max vector should be 1 or same as obs.")
+  }
 
-    if (len_max != 1 & len_max != n)
-        stop("Length of max vector should be 1 or same as obs.")
-
-    in_ci <- sum(min <= obs & obs <= max)
-    in_ci / n
+  in_ci <- sum(min <= obs & obs <= max)
+  in_ci / n
 }
 
 
 ## https://tinyurl.com/y99x2jxq
 log_accuracy_ratio <- function(obs, pred) {
-    nsims <- ncol(pred)
-    avg_pred <- apply(pred, 1, mean)
-    log_accuracy <- log(avg_pred / (obs + 1))
-    log_accuracy
-
+  nsims <- ncol(pred)
+  avg_pred <- apply(pred, 1, mean)
+  log_accuracy <- log(avg_pred / (obs + 1))
+  log_accuracy
 }

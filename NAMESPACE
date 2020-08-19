@@ -3,6 +3,7 @@
 export(abs_madm)
 export(avg_residual)
 export(bias)
+export(mae)
 export(prop_in_ci)
 export(rel_madm)
 export(rel_mae)
